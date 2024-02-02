@@ -14,8 +14,8 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weatherModel = WeatherModel();
-  int temperature, condition;
-  String cityName, weatherIcon, weatherMessage;
+  int? temperature, condition;
+  String? cityName, weatherIcon, weatherMessage;
   @override
   void initState() {
     super.initState();
@@ -34,8 +34,8 @@ class _LocationScreenState extends State<LocationScreen> {
       double temp = weatherData['main']['temp'];
       temperature = temp.toInt();
       condition = weatherData['weather'][0]['id'];
-      weatherIcon = weatherModel.getWeatherIcon(condition);
-      weatherMessage = weatherModel.getMessage(temperature) + ' in ';
+      weatherIcon = weatherModel.getWeatherIcon(condition!);
+      weatherMessage = weatherModel.getMessage(temperature!) + ' in ';
       cityName = weatherData['name'];
     });
   }
@@ -61,7 +61,7 @@ class _LocationScreenState extends State<LocationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () async {
                       var weatherData = await weatherModel.getLocationWeather();
                       updateUI(weatherData);
@@ -69,9 +69,10 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Icon(
                       Icons.near_me,
                       size: 50.0,
+                      color: Colors.white,
                     ),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () async {
                       var typedName = await Navigator.push(
                         context,
@@ -90,6 +91,7 @@ class _LocationScreenState extends State<LocationScreen> {
                     child: Icon(
                       Icons.location_city,
                       size: 50.0,
+                      color: Colors.white,
                     ),
                   ),
                 ],
